@@ -1,24 +1,28 @@
 package bo.com.bancounion.proxyapi.services;
 
+
 import bo.com.bancounion.proxyapi.repo.ICommonRepo;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
 //@ApplicationScoped
 @Named
-@Default
-public  class CRUDImpl <T, ID>  implements ICRUD<T, ID> {
+//@Default
+public  abstract class CRUDImpl <T, ID>  implements ICRUD<T, ID> {
 
-    @Inject
-    protected  ICommonRepo<T, ID> getCommonRepo;
+    protected abstract ICommonRepo<T, ID> commonRepo();
+    //@Inject
+    //protected  ICommonRepo<T, ID> commonRepo;
+    @Transactional
     @Override
     public void save(T t) {
-
+        commonRepo().persist(t);
     }
 
     @Override
@@ -28,12 +32,12 @@ public  class CRUDImpl <T, ID>  implements ICRUD<T, ID> {
 
     @Override
     public List<T> findAll() {
-        return null;
+        return commonRepo().listAll();
     }
 
     @Override
     public T findById(ID id) {
-        return null;
+        return commonRepo().findById(id);
     }
 
     @Override

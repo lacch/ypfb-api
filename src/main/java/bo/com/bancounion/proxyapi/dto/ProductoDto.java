@@ -1,6 +1,7 @@
 package bo.com.bancounion.proxyapi.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class ProductoDto {
 
@@ -8,6 +9,8 @@ public class ProductoDto {
     private String nombre;
     private BigDecimal precio;
     private Long stock;
+
+    private LocalDate fechaVencimiento;
 
     public ProductoDto(String nombre, BigDecimal precio, Long stock) {
         this.nombre = nombre;
@@ -48,6 +51,14 @@ public class ProductoDto {
 
     public void setIdProducto(Long idProducto) {
         this.idProducto = idProducto;
+    }
+
+    public LocalDate getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     @Override

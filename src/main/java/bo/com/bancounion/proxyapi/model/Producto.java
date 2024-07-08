@@ -1,6 +1,7 @@
 package bo.com.bancounion.proxyapi.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ public class Producto {
     @Column (name = "ADICIONADO_POR")
     private String adicionadoPor;
 
+    @CreationTimestamp
     @Column (name = "FECHA_ADICION")
     private LocalDate fecha_adicion;
 

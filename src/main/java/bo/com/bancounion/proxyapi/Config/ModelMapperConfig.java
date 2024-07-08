@@ -36,6 +36,7 @@ public class ModelMapperConfig {
                 map().setNombre(source.getNombre());
                 map().setPrecio(source.getPrecio());
                 map().setStock(source.getStock());
+                map().setFechaVencimiento(source.getFechaVencimiento());
                 // Puedes omitir otros campos que no desees mapear explícitamente
             }
         });

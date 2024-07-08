@@ -8,20 +8,22 @@ import bo.com.bancounion.proxyapi.model.Producto;
 import bo.com.bancounion.proxyapi.repo.IProductoRepo;
 //import bo.com.bancounion.proxyapi.repo.ProductoRepo;
 
+import bo.com.bancounion.proxyapi.services.IProductoService;
+import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.*;
-
+//@Default
 @Path("/Productos")
 //@Transactional
 public class ProductosController {
     //private List<Producto> productos = new ArrayList<>();
 
     @Inject
-    public IProductoRepo productoRepo;
+    public IProductoService productoServ;
 
     @Inject
     public ModelMapperConfig mapperConfig;
@@ -32,10 +34,36 @@ public class ProductosController {
     //private ProductosServices productosServices;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response producto(){
-        //return productoRepo.getAll();
-        List<ProductoDto> list = productoRepo.getAll().stream().map(this::convertToDto).toList();
+    public Response productos(){
+        //return productoServ.getAll();
+        List<ProductoDto> list = productoServ.findAll().stream().map(this::convertToDto).toList();
         ResponseData<List<ProductoDto>> response = new ResponseData<>(200, "SUCCESS", list, null);
+        return Response.ok().entity(response).build();
+    }
+
+    @GET
+    @Path("{idProducto}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response productos(@PathParam("idProducto") Long idProducto){
+        //return productoServ.getAll();
+        Producto prod = productoServ.findById(idProducto);
+        ProductoDto dto = convertToDto(prod);
+        ResponseData<ProductoDto> response = new ResponseData<>(200, "SUCCESS", dto, null);
+        return Response.ok().entity(response).build();
+    }
+
+    @POST
+    //@Path("{idProducto}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response crearProducto(ProductoDto productoDto){
+        Producto prod = convertToEntity(productoDto);
+        productoServ.save(prod);
+
+
+        //return productoServ.getAll();
+        //Producto prod = productoServ.findById(idProducto);
+        ProductoDto dto = convertToDto(prod);
+        ResponseData<ProductoDto> response = new ResponseData<>(200, "SUCCESS", dto, null);
         return Response.ok().entity(response).build();
     }
     /*@GET
@@ -57,7 +85,7 @@ public class ProductosController {
          //       new Producto("aceite", 65, 500)
         //);
         //return  productosServices.getProductos();
-        return productoRepo.listAll();
+        return productoServ.listAll();
     }*/
 
     /*@GET
@@ -72,7 +100,7 @@ public class ProductosController {
     //public ProductoDto nuevoProducto(ProductoDto prod){
     public Producto nuevoProducto(Producto prod){
         //productosServices.addProducto(prod);
-        productoRepo.persist(prod);
+        productoServ.persist(prod);
         return prod;
     }*/
 
