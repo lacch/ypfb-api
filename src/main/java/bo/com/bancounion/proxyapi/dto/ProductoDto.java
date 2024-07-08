@@ -1,17 +1,21 @@
-package bo.com.bancounion.proxyapi.Dto;
+package bo.com.bancounion.proxyapi.dto;
 
-public class Producto {
+import java.math.BigDecimal;
+
+public class ProductoDto {
+
+    private Long idProducto;
     private String nombre;
-    private int precio;
-    private int stock;
+    private BigDecimal precio;
+    private Long stock;
 
-    public Producto(String nombre, int precio, int stock) {
+    public ProductoDto(String nombre, BigDecimal precio, Long stock) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
     }
 
-    public Producto() {
+    public ProductoDto() {
     }
 
     public String getNombre() {
@@ -22,20 +26,28 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public int getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
-    public int getStock() {
+    public Long getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Long stock) {
         this.stock = stock;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
     }
 
     @Override
