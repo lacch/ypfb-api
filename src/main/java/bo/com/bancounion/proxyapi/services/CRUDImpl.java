@@ -1,6 +1,7 @@
 package bo.com.bancounion.proxyapi.services;
 
 
+import bo.com.bancounion.proxyapi.exception.NotFoundException;
 import bo.com.bancounion.proxyapi.repo.ICommonRepo;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
@@ -10,6 +11,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 //@ApplicationScoped
 @Named
@@ -37,7 +39,12 @@ public  abstract class CRUDImpl <T, ID>  implements ICRUD<T, ID> {
 
     @Override
     public T findById(ID id) {
-        return commonRepo().findById(id);
+
+        Optional<T> data = commonRepo().findByIdOptional(id);
+        if(data.isEmpty()){
+            throw new  NotFoundException("El registro con valor ID: "+ id+ " no existe");
+        }
+        return data.get();
     }
 
     @Override

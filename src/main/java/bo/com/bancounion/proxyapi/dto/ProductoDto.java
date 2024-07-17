@@ -1,11 +1,15 @@
 package bo.com.bancounion.proxyapi.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ProductoDto {
 
     private Long idProducto;
+    @NotNull(message = "El nombre no puede ser nulo")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String nombre;
     private BigDecimal precio;
     private Long stock;

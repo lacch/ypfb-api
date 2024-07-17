@@ -15,6 +15,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import javax.validation.Valid;
 import java.util.*;
 //@Default
 @Path("/Productos")
@@ -55,7 +56,7 @@ public class ProductosController {
     @POST
     //@Path("{idProducto}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response crearProducto(ProductoDto productoDto){
+    public Response crearProducto(@Valid ProductoDto productoDto){
         Producto prod = convertToEntity(productoDto);
         productoServ.save(prod);
 
